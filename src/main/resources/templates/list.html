@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #00FF00;
+        }
+
+        .course-item {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-info {
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .delete-btn:hover {
+            background-color: #bd2130;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type=text] {
+            padding: 10px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #FF0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-to-list-btn {
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+            display: none;
+        }
+
+        .back-to-list-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .add-course-btn {
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-course-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Course List</h2>
+    <div class="search-container">
+        <form action="/course/search" method="get">
+            <input type="text" name="keyword" placeholder="Nhập tên giảng viên hoặc địa điểm...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <button class="back-to-list-btn" onclick="window.location.href='/course/list'">Back to List</button>
+    <button class="add-course-btn" onclick="window.location.href='/course/create'">Add Course</button>
+    <ul>
+        <li th:each="course : ${courses}" class="course-item">
+            <div>
+                <span class="course-info text-danger">Ngày Bắt Đầu: <span th:text="${course.startDate}"></span></span><br>
+                <span class="course-info">Tên Giảng Viên: <span th:text="${course.lectureName}"></span></span><br>
+                <span class="course-info">Địa Điểm: <span th:text="${course.place}"></span></span>
+            </div>
+            <div class="action-buttons">
+                <a th:href="@{'/course/edit/' + ${course.id}}" class="edit-btn">Edit</a>
+                <a th:href="@{'/course/delete/' + ${course.id}}" class="delete-btn">Delete</a>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
